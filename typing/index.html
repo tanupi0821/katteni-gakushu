@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>打鍵防衛 — 苦手なかながわかる無料タイピング練習ゲーム</title>
+<meta name="description" content="ローマ字入力の練習ができる無料ゲーム。「し」は si でも shi でも通ります。どのかなで指が止まっているかを記録して、拗音・促音・撥音の苦手を見つけます。インストール不要・ブラウザで遊べます。">
+<link rel="canonical" href="https://tanupi0821.github.io/katteni-gakushu/typing/">
+<meta name="robots" content="index,follow">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="打鍵防衛 — 苦手なかながわかる無料タイピング練習ゲーム">
+<meta property="og:description" content="ローマ字入力の練習ができる無料ゲーム。どのかなで指が止まっているかを記録して、拗音・促音・撥音の苦手を見つけます。">
+<meta property="og:url" content="https://tanupi0821.github.io/katteni-gakushu/typing/">
+<meta property="og:locale" content="ja_JP">
+<meta name="twitter:card" content="summary_large_image">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoGame",
+  "name": "打鍵防衛",
+  "alternateName": "Key Defense",
+  "url": "https://tanupi0821.github.io/katteni-gakushu/typing/",
+  "description": "ローマ字入力の練習ができる無料のブラウザタイピングゲーム。どのかなで指が止まっているかを記録して苦手を可視化します。",
+  "inLanguage": ["ja", "en"],
+  "genre": ["タイピング", "教育"],
+  "playMode": "SinglePlayer",
+  "applicationCategory": "Game",
+  "operatingSystem": "Web browser",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "「し」は si と shi のどちらで打てばいいですか",
+      "acceptedAnswer": { "@type": "Answer", "text": "どちらでも通ります。si / shi / ci のいずれでも受け付けます。ふだん使っている打ち方のままで構いません。" }
+    },
+    {
+      "@type": "Question",
+      "name": "「っ」はどう打ちますか",
+      "acceptedAnswer": { "@type": "Answer", "text": "次の音の子音を重ねます。がっこう なら gakkou です。xtu や ltu と打っても通ります。" }
+    },
+    {
+      "@type": "Question",
+      "name": "「ん」は n と nn のどちらですか",
+      "acceptedAnswer": { "@type": "Answer", "text": "後ろに来る音で変わります。しんぶん のように後ろが子音なら n ひとつで進めますが、れんあい のように後ろが母音のときは nn が必要です。語末も nn です。" }
+    },
+    {
+      "@type": "Question",
+      "name": "無料ですか。インストールは必要ですか",
+      "acceptedAnswer": { "@type": "Answer", "text": "無料で、インストールも登録も不要です。ブラウザでそのまま遊べます。記録はお使いの端末の中だけに保存されます。" }
+    }
+  ]
+}
+</script>
+
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #080b12;
+    --panel: #0e1420;
+    --line: #1e293b;
+    --text: #dde6f2;
+    --dim: #8ea3bd;
+    --accent: #ffe36e;
+    --link: #7fd4ff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'BIZ UDPGothic', 'Yu Gothic UI', 'Meiryo', system-ui, sans-serif;
+    line-height: 1.85;
+    font-size: 16px;
+  }
+  .wrap { max-width: 940px; margin: 0 auto; padding: 32px 20px 72px; }
+
+  header { text-align: center; margin-bottom: 26px; }
+  h1 { font-size: clamp(22px, 4.4vw, 32px); margin: 0 0 10px; line-height: 1.45; text-wrap: balance; }
+  .lead { color: var(--dim); margin: 0; font-size: 15px; }
+
+  /* ── ゲーム枠 ───────────────────────── */
+  #stage { position: relative; margin: 22px 0 10px; background: #06090f; border: 1px solid var(--line); border-radius: 4px; overflow: hidden; }
+  #stage canvas { display: block; width: 100%; aspect-ratio: 16 / 9; }
+  #veil {
+    position: absolute; inset: 0; display: grid; place-items: center; gap: 8px;
+    background: rgba(5,8,15,.72); cursor: pointer; text-align: center;
+  }
+  #veil.hidden { display: none; }
+  #veil b { font-size: 19px; letter-spacing: .04em; }
+  #veil span { font-size: 13px; color: var(--dim); }
+  .bar { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; font-size: 13px; color: var(--dim); margin-bottom: 32px; }
+  .bar button {
+    font: inherit; color: var(--text); background: #16202e; border: 1px solid var(--line);
+    border-radius: 3px; padding: 5px 12px; cursor: pointer;
+  }
+  .bar button:hover { border-color: #35506f; }
+  .bar button:focus-visible { outline: 2px solid var(--link); outline-offset: 2px; }
+
+  h2 { font-size: 20px; margin: 40px 0 12px; padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+  h3 { font-size: 16px; margin: 26px 0 6px; color: var(--accent); }
+  p { margin: 0 0 14px; }
+  ul { margin: 0 0 14px; padding-left: 1.3em; }
+  li { margin-bottom: 5px; }
+  code { font-family: 'Cascadia Mono', Consolas, monospace; background: #16202e; padding: 1px 6px; border-radius: 3px; font-size: .92em; }
+  .tw { overflow-x: auto; margin-bottom: 16px; }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; min-width: 460px; }
+  th, td { text-align: left; padding: 8px 12px 8px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--dim); font-weight: 600; font-size: 12px; letter-spacing: .06em; }
+  .kana { font-size: 17px; font-weight: 700; }
+
+  details { border: 1px solid var(--line); border-radius: 4px; padding: 12px 16px; margin-bottom: 10px; background: var(--panel); }
+  summary { cursor: pointer; font-weight: 600; }
+  details p { margin: 10px 0 0; color: var(--dim); }
+
+  footer { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 13px; color: var(--dim); }
+  a { color: var(--link); }
+
+  /* 第三者広告の枠。独自ドメインを取って審査に通るまでは空のまま */
+  .ad { margin: 32px 0; min-height: 0; }
+  .ad:empty { display: none; }
+
+  /* 自分のアプリの紹介。クラス名を .ad にしないのは広告ブロッカーに消されないため */
+  .promo { margin: 30px 0; }
+  .promo:empty { display: none; }
+  .promo-card {
+    display: flex; gap: 16px; align-items: flex-start;
+    background: var(--panel); border: 1px solid var(--line); border-radius: 6px;
+    padding: 18px; text-decoration: none; color: inherit;
+    transition: border-color .15s;
+  }
+  .promo-card:hover { border-color: #3a5a80; }
+  .promo-card:focus-visible { outline: 2px solid var(--link); outline-offset: 2px; }
+  .promo-card img { border-radius: 12px; flex-shrink: 0; }
+  .promo-label {
+    display: block; font-size: 11px; letter-spacing: .08em; color: var(--dim); margin-bottom: 3px;
+  }
+  .promo-card strong { display: block; font-size: 17px; margin-bottom: 4px; }
+  .promo-card p { font-size: 14px; color: var(--dim); margin: 0 0 8px; line-height: 1.7; }
+  .promo-cta { font-size: 13px; color: var(--link); }
+  .promo-cta::after { content: ' →'; }
+  @media (max-width: 480px) {
+    .promo-card { flex-direction: column; gap: 12px; }
+  }
+
+  @media (max-width: 560px) {
+    body { font-size: 15px; }
+    .wrap { padding: 20px 16px 56px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>打鍵防衛 — 苦手なかながわかる<br>無料タイピング練習ゲーム</h1>
+    <p class="lead">ローマ字入力の練習ができるブラウザゲーム。インストールも登録も不要です。</p>
+  </header>
+
+  <div id="stage">
+    <canvas id="cv"></canvas>
+    <div id="veil">
+      <b>クリックしてはじめる</b>
+      <span>日本語入力（IME）は OFF にしてください</span>
+    </div>
+  </div>
+  <div class="bar">
+    <button id="fs" type="button">全画面</button>
+    <span>操作中は <code>Esc</code> で設定・<code>L</code> で記録／枠の外をクリックで解除</span>
+  </div>
+
+  <!-- 1 回遊び終えて画面から目を離したところ。ゲームの手前には置かない -->
+  <div class="promo" id="promo-top"></div>
+  <div class="ad" id="ad-top"></div>
+
+  <h2>どんなゲームか</h2>
+  <p>
+    右から流れてくる語句を、表示されたローマ字で打ち込んで撃ち落とします。
+    打ち間違えるとコンボが切れ、左のコアに触れられると体力が減ります。
+    1 回およそ 3〜6 分で終わるので、練習の合間に区切りよく遊べます。
+  </p>
+  <p>
+    日本語モードでは、敵ごとに <strong>漢字・読み・打つローマ字</strong>の三段が出ます。
+    読めない漢字でも読みが見えるので、漢字の勉強で手が止まることはありません。
+    英語モードに切り替えると英単語のタイピング練習になります。
+  </p>
+
+  <h2>ふつうのタイピングゲームと違うところ</h2>
+  <p>
+    多くのタイピングゲームは「何文字打てたか」しか返しません。
+    このゲームは打鍵を 1 つずつ記録して、<strong>どのかなで指が止まっているか</strong>を出します。
+  </p>
+  <p>
+    結果画面の「指が止まったところ」は、<strong>他人ではなく自分の平均</strong>と比べた数字です。
+    <code>1.00</code> が自分の平均で、<code>1.80</code> と出ていればそのかなだけ 1.8 倍の時間がかかっている、という意味になります。
+    速い人にも苦手なかなはあるので、他人と比べても練習の役には立ちません。
+  </p>
+  <p>
+    打鍵数で割ってあるので、<code>きょ</code>（3 打鍵）が <code>こ</code>（2 打鍵）より
+    時間がかかること自体は苦手と判定されません。3 秒を超えて手が止まった分は、
+    考えていた時間とみなして数えていません。
+  </p>
+
+  <h2>ローマ字入力でつまずきやすいところ</h2>
+  <p>
+    練習していて指が止まるのは、たいてい次の 3 つです。
+    このゲームは<strong>どの打ち方でも正解にします</strong>ので、
+    ふだん使っている打ち方のままで構いません。
+  </p>
+
+  <h3>拗音（ようおん）— きゃ・しゅ・ちょ</h3>
+  <p>ここが最も差が出ます。2 文字で 1 つの音なので、指が一瞬迷います。</p>
+  <div class="tw">
+    <table>
+      <thead><tr><th>かな</th><th>打ち方（どれでも可）</th><th>例</th></tr></thead>
+      <tbody>
+        <tr><td class="kana">しゃ</td><td><code>sya</code> / <code>sha</code> / <code>sixya</code></td><td>写真 → <code>syasinn</code></td></tr>
+        <tr><td class="kana">ちょ</td><td><code>tyo</code> / <code>cho</code> / <code>cyo</code></td><td>調子 → <code>tyousi</code></td></tr>
+        <tr><td class="kana">じゅ</td><td><code>zyu</code> / <code>ju</code> / <code>jyu</code></td><td>呪文 → <code>jumonn</code></td></tr>
+        <tr><td class="kana">きょ</td><td><code>kyo</code> / <code>kilyo</code></td><td>京都 → <code>kyouto</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>促音（そくおん）— 小さい「っ」</h3>
+  <p>次に来る音の子音を重ねます。<code>xtu</code> と打っても通りますが、重ねたほうが速いです。</p>
+  <div class="tw">
+    <table>
+      <thead><tr><th>語</th><th>打ち方</th><th>注意</th></tr></thead>
+      <tbody>
+        <tr><td class="kana">がっこう</td><td><code>gakkou</code> / <code>gaxtukou</code></td><td>k を重ねる</td></tr>
+        <tr><td class="kana">いっしょ</td><td><code>issyo</code> / <code>issho</code></td><td>s を重ねる</td></tr>
+        <tr><td class="kana">いっち</td><td><code>icchi</code> / <code>itti</code></td><td>ち の綴りで重ねる字が変わる</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>撥音（はつおん）— 「ん」の n と nn</h3>
+  <p>後ろに来る音で変わります。ここを間違えると、打てているのに弾かれた感じがします。</p>
+  <div class="tw">
+    <table>
+      <thead><tr><th>語</th><th>打ち方</th><th>なぜ</th></tr></thead>
+      <tbody>
+        <tr><td class="kana">しんぶん</td><td><code>sinbunn</code></td><td>後ろが子音なので n ひとつで進める。語末は nn</td></tr>
+        <tr><td class="kana">れんあい</td><td><code>rennai</code></td><td>後ろが母音。n ひとつだと「な」になってしまう</td></tr>
+        <tr><td class="kana">しんや</td><td><code>sinnya</code></td><td>後ろが y のときも nn が必要</td></tr>
+        <tr><td class="kana">こんにちは</td><td><code>konnnitiha</code></td><td>後ろが n。n が 3 つ並ぶ</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ad" id="ad-mid"></div>
+
+  <h2>遊び方</h2>
+  <ul>
+    <li>タイトル画面で <code>1</code> = 英語 / <code>2</code> = 日本語ローマ字 を選ぶ</li>
+    <li><code>Enter</code> ではじめる</li>
+    <li>語句を打ち切ると撃破。同じ文字で始まる語が並んでいても、打ち進めれば絞り込まれる</li>
+    <li>ウェーブを越えるたびに強化を 1 つ選ぶ</li>
+    <li><code>Esc</code> で一時停止と音量設定、<code>L</code> で自己ベストの記録</li>
+  </ul>
+
+  <h2>よくある質問</h2>
+  <details>
+    <summary>「し」は si と shi のどちらで打てばいいですか</summary>
+    <p>どちらでも通ります。<code>si</code> / <code>shi</code> / <code>ci</code> のいずれでも受け付けます。ふだんの打ち方のままで構いません。</p>
+  </details>
+  <details>
+    <summary>記録はどこに保存されますか</summary>
+    <p>お使いの端末の中（ブラウザの localStorage）だけです。サーバーへは送っていません。ブラウザのデータを消すと記録も消えます。</p>
+  </details>
+  <details>
+    <summary>スマートフォンで遊べますか</summary>
+    <p>物理キーボードが必要なので、パソコンでの利用を想定しています。タブレットでも外付けキーボードがあれば遊べます。</p>
+  </details>
+  <details>
+    <summary>日本語入力が ON のままだと打てません</summary>
+    <p>ローマ字を直接受け取る作りなので、IME が ON だと変換窓に文字を取られます。<code>半角/全角</code> キーで OFF にしてください。</p>
+  </details>
+
+  <div class="promo" id="promo-bottom"></div>
+
+  <footer>
+    <p>
+      <a href="../">勝手に学習</a> ・
+      <a href="../privacy-policy.html">プライバシーポリシー</a>
+    </p>
+    <p>音も画像も使わず、すべてブラウザ上で生成しています。</p>
+  </footer>
+</div>
+
+<script type="module">
+  import { setFocused } from './src/game.js';
+  import { mountAd } from './src/ads.js';
+  import { mountPromo } from './src/promo.js';
+
+  // 自分のアプリの紹介
+  mountPromo('promo-top', 'study');
+  mountPromo('promo-bottom', 'study');
+
+  // 第三者広告は未設定の間は何も起きない（枠は空のまま非表示）
+  mountAd('ad-top', 'top');
+  mountAd('ad-mid', 'mid');
+
+  const stage = document.getElementById('stage');
+  const veil = document.getElementById('veil');
+
+  // 記事ページなので、枠をクリックしたときだけキーを渡す。
+  // そうしないとスクロールしようとしただけでゲームが動く。
+  const focus = (on) => {
+    setFocused(on);
+    veil.classList.toggle('hidden', on);
+  };
+  focus(false);
+
+  stage.addEventListener('click', () => focus(true));
+  document.addEventListener('click', (e) => { if (!stage.contains(e.target)) focus(false); });
+  addEventListener('blur', () => focus(false));
+
+  document.getElementById('fs').addEventListener('click', () => {
+    if (document.fullscreenElement) document.exitFullscreen();
+    else stage.requestFullscreen?.().then(() => focus(true));
+  });
+</script>
+</body>
+</html>

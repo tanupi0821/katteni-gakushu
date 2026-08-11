@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Search Console に直接この URL を登録して使う。
+  GitHub Pages のプロジェクトサイトは /katteni-gakushu/ 配下なので、
+  robots.txt（ドメイン直下でしか効かない）からは参照できない。
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://tanupi0821.github.io/katteni-gakushu/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tanupi0821.github.io/katteni-gakushu/typing/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://tanupi0821.github.io/katteni-gakushu/privacy-policy.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  <url>
+    <loc>https://tanupi0821.github.io/katteni-gakushu/privacy-policy-en.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
+  </url>
+</urlset>
